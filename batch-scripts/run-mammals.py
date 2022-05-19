@@ -47,8 +47,8 @@ Pan_troglodytes_HOMINIDAE_PRIMATES:286719)0:163184)0:500365)
 
 
 def run_sim_loci_inference(
-    tree: toytree.ToyTree,
-    ctime: int,
+    #tree: toytree.ToyTree,
+    #ctime: int,
     recomb: float,
     mut: float,
     neff: int,
@@ -66,21 +66,25 @@ def run_sim_loci_inference(
     This only nees to be run for the largest NLOCI value.
     """
     # create name for this job based on params
+    
+    # skip ctime, give mammals tree
+    tree = toytree.tree(MAMMALS_27_TIPS_RELATIVE_EDGES)
+
     params = (
-        f"neff{int(neff)}-ctime{ctime}-"
+        f"neff{int(neff)}"
         f"recomb{int(bool(recomb))}-rep{rep}-"
         f"nloci{max(nloci)}-nsites{nsites}"
     )
     # locpath = outdir / (params + "-sim-loci.csv")
     # gtpath = outdir / (params + "-gene-trees.csv")
 
-    # scale species tree to a new root height in generations
-    root_in_gens = ctime * 4 * neff
-    sptree = tree.mod.edges_scale_to_root_height(root_in_gens)
+    # skip scale species tree to a new root height in generations
+    #root_in_gens = ctime * 4 * neff
+    #sptree = tree.mod.edges_scale_to_root_height(root_in_gens)
 
     # init coal Model
     model = ipcoal.Model(
-        sptree,
+        tree,
         Ne=neff,
         seed_trees=seed,
         seed_mutations=seed,
@@ -155,8 +159,8 @@ def single_command_line_parser():
         description='Coalescent simulation and tree inference w/ recombination')
     parser.add_argument(
         '--neff', type=float, required=True, help='Effective population size')
-    parser.add_argument(
-        '--tree', type=float, required=True, help='Species tree newick w/ edges in generations.')
+    #parser.add_argument(
+    #    '--tree', type=float, required=True, help='Species tree newick w/ edges in generations.')
     parser.add_argument(
         '--recomb', type=float, required=True, help='Recombination rate.')
     parser.add_argument(

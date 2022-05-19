@@ -2,13 +2,13 @@
 
 """...
 
-This Python script includes code to run a simulation routine, to 
+This Python script includes code to run a simulation routine, to
 accept arguments from the command line to parameterize this function,
-and to distribute job submissions of this script to SLURM over 
+and to distribute job submissions of this script to SLURM over
 hundreds of combination of parameter settings.
 
 This script sets up a total of 6400 jobs across different parameter
-combinations, each of which takes a few hours to run, so it is a 
+combinations, each of which takes a few hours to run, so it is a
 good idea to use HPC to run this.
 
 """
@@ -52,10 +52,10 @@ python {root}/run-mammals.py \
 
 
 def write_and_submit_sbatch_script(
-    neff: int, 
-    ctime: int, 
+    neff: int,
+    #ctime: int,
     mut: float,
-    recomb: float, 
+    recomb: float,
     rep: int,
     seed: int,
     nsites: int,
@@ -65,12 +65,12 @@ def write_and_submit_sbatch_script(
     account: str,
     node_heights: List[float],
     raxml_bin: Path,
-    astral_bin: Path,    
+    astral_bin: Path,
     ):
     """Submit an sbatch job to the cluster with these params."""
     # build parameter name string
     params = (
-        f"neff{neff}-ctime{ctime}-"
+        f"neff{neff}"
         f"recomb{int(bool(recomb))}-rep{rep}-"
         f"nloci{max(nloci)}-nsites{nsites}"
     )
@@ -79,7 +79,7 @@ def write_and_submit_sbatch_script(
     # paths = [outdir / (params + f"-astral-genetree-subloci{i}.nwk") for i in nloci]
     # if all(i.exists() for i in paths):
     #     print(f"skipping job {params}, result files exist.")
-    #     return 
+    #     return
 
     # expand sbatch shell script with parameters
     sbatch = SBATCH.format(**dict(
@@ -87,7 +87,7 @@ def write_and_submit_sbatch_script(
         jobname=params,
         ncores=ncores,
         neff=neff,
-        ctime=ctime,
+        #ctime=ctime,
         mut=mut,
         recomb=recomb,
         nsites=nsites,
@@ -117,19 +117,6 @@ def write_and_submit_sbatch_script(
 def distributed_command_line_parser():
     """Parse command line arguments and return.
 
-    Example
-    -------
-    >>> python run-sim-loci-inference-distributed.py  \
-    >>>     --ncores 2 \
-    >>>     --nreps 100 \
-    >>>     --nsites 2000 10000 \
-    >>>     --neff 1e4 1e5 \
-    >>>     --ctimes 0.1 0.2 0.3 0.4 0.5 0.75 1.0 1.25 \
-    >>>     --mut 5e-8 \
-    >>>     --recomb 0 5e-9 \
-    >>>     --node-heights 0.01 0.05 0.06 1 \
-    >>>     --outdir /scratch/recomb/ \
-    >>>     --account eaton \
     """
     parser = argparse.ArgumentParser(
         description='Coalescent simulation and tree inference w/ recombination')
@@ -146,7 +133,7 @@ def distributed_command_line_parser():
     parser.add_argument(
         '--nsites', type=int, default=[2000], nargs="*", help='length of simulated loci')
     parser.add_argument(
-        '--nloci', type=int, default=[20000], nargs="*", help='number of independent simulated loci.')
+        '--nloci', type=int, default=[1000, 2000, 5000, 10000, 20000], nargs="*", help='number of independent simulated loci.')
     parser.add_argument(
         '--nreps', type=int, default=100, help='number replicate per param setting.')
     parser.add_argument(
@@ -185,7 +172,7 @@ if __name__ == "__main__":
     for nsites in args.nsites:
         for neff in args.neff:
             for ctime in args.ctime:
-                for recomb in args.recomb:                
+                for recomb in args.recomb:
                     for rep in range(args.nreps):
 
                         # skip submitting job if all outfiles exist.
@@ -205,9 +192,9 @@ if __name__ == "__main__":
                         # gtime = int(ctime * 4 * neff)
                         write_and_submit_sbatch_script(
                             neff=neff,
-                            ctime=ctime, 
+                            ctime=ctime,
                             mut=args.mut,
-                            recomb=recomb, 
+                            recomb=recomb,
                             nloci=args.nloci,
                             nsites=nsites,
                             rep=rep,
@@ -217,7 +204,7 @@ if __name__ == "__main__":
                             account=args.account,
                             node_heights=args.node_heights,
                             raxml_bin=RAXML_BIN,
-                            astral_bin=ASTRAL_BIN,                            
+                            astral_bin=ASTRAL_BIN,
                         )
                         time.sleep(0.5)
     print(f"{njobs} jobs submitted.")
