@@ -174,41 +174,41 @@ if __name__ == "__main__":
     SEEDS = np.random.default_rng(123).integers(1e12, size=args.nreps)
     for nsites in args.nsites:
         for neff in args.neff:
-            #for ctime in args.ctime:
-            for recomb in args.recomb:
-                for rep in range(args.nreps):
+            for root_height in args.root_height:
+                for recomb in args.recomb:
+                    for rep in range(args.nreps):
 
-                    # skip submitting job if all outfiles exist.
-                    params = (
-                        f"neff{neff}-"
-                        f"recomb{int(bool(recomb))}-rep{rep}-"
-                        f"nloci{max(args.nloci)}-nsites{nsites}"
-                    )
+                        # skip submitting job if all outfiles exist.
+                        params = (
+                            f"neff{neff}-"
+                            f"recomb{int(bool(recomb))}-rep{rep}-"
+                            f"nloci{max(args.nloci)}-nsites{nsites}"
+                        )
 
-                    # check for existing output files and skip this job if present
-                    paths = [args.outdir / (params + f"-astral-genetree-subloci{i}.nwk") for i in args.nloci]
-                    if all(i.exists() for i in paths):
-                        njobs -= 1
-                        print(f"skipping job {params}, result files exist.")
-                        continue
+                        # check for existing output files and skip this job if present
+                        paths = [args.outdir / (params + f"-astral-genetree-subloci{i}.nwk") for i in args.nloci]
+                        if all(i.exists() for i in paths):
+                            njobs -= 1
+                            print(f"skipping job {params}, result files exist.")
+                            continue
 
-                    # gtime = int(ctime * 4 * neff)
-                    write_and_submit_sbatch_script(
-                        neff=neff,
-                        #ctime=ctime,
-                        mut=args.mut,
-                        recomb=recomb,
-                        nloci=args.nloci,
-                        nsites=nsites,
-                        rep=rep,
-                        seed=SEEDS[rep],
-                        ncores=args.ncores,
-                        outdir=args.outdir,
-                        account=args.account,
-                        root_height=args.root_height,
-                        #node_heights=args.node_heights,
-                        raxml_bin=RAXML_BIN,
-                        astral_bin=ASTRAL_BIN,
-                    )
-                    time.sleep(0.5)
+                        # gtime = int(ctime * 4 * neff)
+                        write_and_submit_sbatch_script(
+                            neff=neff,
+                            #ctime=ctime,
+                            mut=args.mut,
+                            recomb=recomb,
+                            nloci=args.nloci,
+                            nsites=nsites,
+                            rep=rep,
+                            seed=SEEDS[rep],
+                            ncores=args.ncores,
+                            outdir=args.outdir,
+                            account=args.account,
+                            root_height=root_height,
+                            #node_heights=args.node_heights,
+                            raxml_bin=RAXML_BIN,
+                            astral_bin=ASTRAL_BIN,
+                        )
+                        time.sleep(0.5)
     print(f"{njobs} jobs submitted.")
