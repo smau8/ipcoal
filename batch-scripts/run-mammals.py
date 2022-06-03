@@ -177,8 +177,8 @@ def single_command_line_parser():
         '--outdir', type=Path, required=True, help='directory to write output files (e.g., scratch)')
     parser.add_argument(
         '--ncores', type=int, required=True, help='number of cores.')
-    parser.add_argument(
-        '--node-heights', type=float, nargs=4, required=True, help='imbalanced species tree relative node heights.')
+    #parser.add_argument(
+    #    '--node-heights', type=float, nargs=4, required=True, help='imbalanced species tree relative node heights.')
     parser.add_argument(
         '--raxml-bin', type=Path, help='path to raxml-ng binary')
     parser.add_argument(
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     # use hardcoded mammal tree w/ relative edge lengths scaled to root height 1
     # IMBTREE = toytree.rtree.imbtree(ntips=5)
     # SPTREE = IMBTREE.set_node_data("height", dict(zip(range(5, 9), args.node_heights)))
-    SPTREE = "TODO"
+    # SPTREE = toytree.tree(MAMMALS_27_TIPS_RELATIVE_EDGES)
 
     args.raxml_bin = (
         Path(args.raxml_bin) if args.raxml_bin
@@ -211,8 +211,8 @@ if __name__ == "__main__":
     Path(args.outdir).mkdir(exist_ok=True)
 
     run_sim_loci_inference(
-        tree=SPTREE,
-        ctime=args.ctime,
+        #tree=SPTREE,
+        #ctime=args.ctime,
         recomb=args.recomb,
         mut=args.mut,
         neff=args.neff,
