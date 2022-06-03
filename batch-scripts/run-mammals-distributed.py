@@ -192,7 +192,7 @@ if __name__ == "__main__":
                         # gtime = int(ctime * 4 * neff)
                         write_and_submit_sbatch_script(
                             neff=neff,
-                            ctime=ctime,
+                            #ctime=ctime,
                             mut=args.mut,
                             recomb=recomb,
                             nloci=args.nloci,
