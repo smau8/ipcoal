@@ -63,7 +63,7 @@ def write_and_submit_sbatch_script(
     ncores: int,
     outdir: Path,
     account: str,
-    node_heights: List[float],
+    #node_heights: List[float],
     raxml_bin: Path,
     astral_bin: Path,
     ):
@@ -94,7 +94,7 @@ def write_and_submit_sbatch_script(
         nloci=" ".join([str(i) for i in nloci]),
         rep=rep,
         seed=seed,
-        node_heights=" ".join([str(i) for i in node_heights]),
+        #node_heights=" ".join([str(i) for i in node_heights]),
         raxml_bin=raxml_bin,
         astral_bin=astral_bin,
         outdir=outdir,
@@ -202,7 +202,7 @@ if __name__ == "__main__":
                         ncores=args.ncores,
                         outdir=args.outdir,
                         account=args.account,
-                        node_heights=args.node_heights,
+                        #node_heights=args.node_heights,
                         raxml_bin=RAXML_BIN,
                         astral_bin=ASTRAL_BIN,
                     )
