@@ -22,27 +22,7 @@ Macropus_eugenii_MACROPODIDAE_DIPROTODONTIA:1.53532e+07)0:2.58354e+07,
 Dasypus_novemcinctus_DASYPODIDAE_CINGULATA:1.31247e+07)0:2.10194e+06,
 (Echinops_telfairi_TENRECIDAE_AFROSORICIDA:1.47965e+07,
 (Loxodonta_africana_ELEPHANTIDAE_PROBOSCIDEA:1.88991e+06,
-Procavia_capensis_PROCAVIIDAE_HYRACOIDEA:5.60073e+06)0:1.94372e+06)
-0:482422)0:138844,(((Erinaceus_europaeus_ERINACEIDAE_EULIPOTYPHLA:1.64741e+07,
-Sorex_araneus_SORICIDAE_EULIPOTYPHLA:5.04953e+07)0:2.12066e+06,
-((Pteropus_vampyrus_PTEROPODIDAE_CHIROPTERA:7.92231e+06,
-Myotis_lucifugus_VESPERTILIONIDAE_CHIROPTERA:5.66853e+06)0:1.34433e+06,
-(Sus_scrofa_SUIDAE_CETARTIODACTYLA:7.31967e+06,
-Tursiops_truncatus_DELPHINIDAE_CETARTIODACTYLA:3.02457e+06)0:1.90325e+06)
-0:168392)0:442025,(((Ochotona_princeps_OCHOTONIDAE_LAGOMORPHA:1.73297e+07,
-Oryctolagus_cuniculus_LEPORIDAE_LAGOMORPHA:1.19592e+07)0:6.8529e+06,
-(Dipodomys_ordii_HETEROMYIDAE_RODENTIA:2.17261e+07,
-Mus_musculus_MURIDAE_RODENTIA:3.94926e+07)0:2.3554e+06)0:276914,
-(Tupaia_belangeri_TUPAIIDAE_SCANDENTIA:1.67878e+07,
-((Otolemur_garnettii_GALAGIDAE_PRIMATES:7.60855e+06,
-Microcebus_murinus_CHEIROGALEIDAE_PRIMATES:8.43923e+06)
-0:2.72356e+06,(Tarsius_syrichta_TARSIIDAE_PRIMATES:1.00465e+07,
-(Callithrix_jacchus_CALLITRICHIDAE_PRIMATES:5.15897e+06,
-(Macaca_mulatta_CERCOPITHECIDAE_PRIMATES:1.40441e+06,
-(Pongo_pygmaeus_HOMINIDAE_PRIMATES:458063,(Gorilla_gorilla_HOMINIDAE_PRIMATES:260654,
-Pan_troglodytes_HOMINIDAE_PRIMATES:286719)0:163184)0:500365)
-0:619821)0:2.2589e+06)0:327620)0:404022)0:997969)0:1.50881e+06)0:726102)
-0:9.1514e+06)0:2.70448e+06);
+Procavia_capensis_PROCAVIIDAE_HYRACOIDEA:5.60073e+06)0:1.94372e+06)0:482422)0:138844,(((Erinaceus_europaeus_ERINACEIDAE_EULIPOTYPHLA:1.64741e+07,Sorex_araneus_SORICIDAE_EULIPOTYPHLA:5.04953e+07)0:2.12066e+06,((Pteropus_vampyrus_PTEROPODIDAE_CHIROPTERA:7.92231e+06,Myotis_lucifugus_VESPERTILIONIDAE_CHIROPTERA:5.66853e+06)0:1.34433e+06,(Sus_scrofa_SUIDAE_CETARTIODACTYLA:7.31967e+06,Tursiops_truncatus_DELPHINIDAE_CETARTIODACTYLA:3.02457e+06)0:1.90325e+06)0:168392)0:442025,(((Ochotona_princeps_OCHOTONIDAE_LAGOMORPHA:1.73297e+07,Oryctolagus_cuniculus_LEPORIDAE_LAGOMORPHA:1.19592e+07)0:6.8529e+06,(Dipodomys_ordii_HETEROMYIDAE_RODENTIA:2.17261e+07,Mus_musculus_MURIDAE_RODENTIA:3.94926e+07)0:2.3554e+06)0:276914,(Tupaia_belangeri_TUPAIIDAE_SCANDENTIA:1.67878e+07,((Otolemur_garnettii_GALAGIDAE_PRIMATES:7.60855e+06,Microcebus_murinus_CHEIROGALEIDAE_PRIMATES:8.43923e+06)0:2.72356e+06,(Tarsius_syrichta_TARSIIDAE_PRIMATES:1.00465e+07,(Callithrix_jacchus_CALLITRICHIDAE_PRIMATES:5.15897e+06,(Macaca_mulatta_CERCOPITHECIDAE_PRIMATES:1.40441e+06,(Pongo_pygmaeus_HOMINIDAE_PRIMATES:458063,(Gorilla_gorilla_HOMINIDAE_PRIMATES:260654,Pan_troglodytes_HOMINIDAE_PRIMATES:286719)0:163184)0:500365)0:619821)0:2.2589e+06)0:327620)0:404022)0:997969)0:1.50881e+06)0:726102)0:9.1514e+06)0:2.70448e+06);
 """
 
 
@@ -179,7 +159,7 @@ def single_command_line_parser():
     parser.add_argument(
         '--ncores', type=int, required=True, help='number of cores.')
     parser.add_argument(
-        '--root_height', default=[66_371_836], nargs="*", type=float, help='Scale relative sptree edges so root height is at this.')
+        '--root_height', type=float, help='Scale relative sptree edges so root height is at this.')
     #parser.add_argument(
     #    '--node-heights', type=float, nargs=4, required=True, help='imbalanced species tree relative node heights.')
     parser.add_argument(
