@@ -43,7 +43,7 @@ python {root}/run-mammals.py \
 --seed {seed} \
 --outdir {outdir} \
 --ncores {ncores} \
---root-height {root_height} \
+--root_height {root_height} \
 --raxml-bin {raxml_bin} \
 --astral-bin {astral_bin} \
 --outdir {outdir}
