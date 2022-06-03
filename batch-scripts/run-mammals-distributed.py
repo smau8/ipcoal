@@ -43,7 +43,7 @@ python {root}/run-mammals.py \
 --seed {seed} \
 --outdir {outdir} \
 --ncores {ncores} \
---root-height {..._heights} \
+--root-height {root_heights} \
 --raxml-bin {raxml_bin} \
 --astral-bin {astral_bin} \
 --outdir {outdir}
@@ -63,6 +63,7 @@ def write_and_submit_sbatch_script(
     ncores: int,
     outdir: Path,
     account: str,
+    root_height: float,
     #node_heights: List[float],
     raxml_bin: Path,
     astral_bin: Path,
@@ -73,6 +74,7 @@ def write_and_submit_sbatch_script(
         f"neff{neff}"
         f"recomb{int(bool(recomb))}-rep{rep}-"
         f"nloci{max(nloci)}-nsites{nsites}"
+        f"root_height{root_height}"
     )
 
     # check for existing output files and skip this job if present
@@ -94,6 +96,7 @@ def write_and_submit_sbatch_script(
         nloci=" ".join([str(i) for i in nloci]),
         rep=rep,
         seed=seed,
+        root_height=root_height,
         #node_heights=" ".join([str(i) for i in node_heights]),
         raxml_bin=raxml_bin,
         astral_bin=astral_bin,
@@ -123,7 +126,7 @@ def distributed_command_line_parser():
     # parser.add_argument(
         # '--tree', type=str, help='Species tree topology w/ relative edge lengths')
     parser.add_argument(
-        '--root-height', default=[66_371_836], nargs="*", type=float, help='Scale relative sptree edges so root height is at this.')
+        '--root_height', default=[66_371_836], nargs="*", type=float, help='Scale relative sptree edges so root height is at this.')
     parser.add_argument(
         '--neff', type=int, default=[10000, 100000], nargs="*", help='Effective population size')
     parser.add_argument(
@@ -202,6 +205,7 @@ if __name__ == "__main__":
                         ncores=args.ncores,
                         outdir=args.outdir,
                         account=args.account,
+                        root_height=args.root_height,
                         #node_heights=args.node_heights,
                         raxml_bin=RAXML_BIN,
                         astral_bin=ASTRAL_BIN,
